@@ -1,5 +1,6 @@
 package com.server.hackathon.member.auth;
 
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -44,7 +45,7 @@ public class SecurityConfig {
 
                 // 5. 요청 권한 설정
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/users/signup", "/api/users/login", "/api/users/logout").permitAll()
+                        .requestMatchers("/api/users/signup", "/api/users/login", "/actuator/health").permitAll()
                         .anyRequest().authenticated()
                 )
 
@@ -57,11 +58,19 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOriginPattern("*"); // 추후 프론트 주소만 입력
-        configuration.addAllowedMethod("*");
-        configuration.addAllowedHeader("*");
-        configuration.setAllowCredentials(true); // 쿠키 전송 허용 핵심 설정
-        configuration.setMaxAge(3600L); // Preflight 캐싱 시간
+
+        // [수정된 부분] 허용할 프론트엔드 도메인들을 리스트로 명시
+        configuration.setAllowedOrigins(List.of(
+                "http://localhost:3000"      // 로컬: React/Next.js 개발 서버
+        ));
+
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(List.of("*"));
+
+
+        configuration.setAllowCredentials(true);
+
+        configuration.setMaxAge(3600L); // Preflight 요청 캐시 시간 (1시간)
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
