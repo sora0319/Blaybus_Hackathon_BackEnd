@@ -61,7 +61,7 @@ public class SecurityConfig {
 
         // [수정된 부분] 허용할 프론트엔드 도메인들을 리스트로 명시
         configuration.setAllowedOrigins(List.of(
-                "http://localhost:3000",
+                "http://localhost:5173",
                 "https://simvex.coreio.site"// 로컬: React/Next.js 개발 서버
         ));
 
