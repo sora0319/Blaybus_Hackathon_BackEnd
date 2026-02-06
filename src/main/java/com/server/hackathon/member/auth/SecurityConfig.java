@@ -1,9 +1,12 @@
 package com.server.hackathon.member.auth;
 
+import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -23,6 +26,11 @@ public class SecurityConfig {
     private final JwtTokenProvider jwtTokenProvider;
 
     @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
+    }
+
+    @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
@@ -30,26 +38,36 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                // 1. HTTP Basic 인증 비활성화 (람다식 사용)
+                // HTTP Basic 인증 비활성화 (람다식 사용)
                 .httpBasic(AbstractHttpConfigurer::disable)
 
-                // 2. CSRF 비활성화
+                // CSRF 비활성화
                 .csrf(AbstractHttpConfigurer::disable)
 
-                // 3. CORS 설정
+                // CORS 설정
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
 
-                // 4. 세션 관리 (Stateless)
+                // 세션 관리 (Stateless)
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
-                // 5. 요청 권한 설정
+                // 요청 권한 설정
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/users/signup", "/api/users/login", "/actuator/health").permitAll()
                         .anyRequest().authenticated()
                 )
 
-                // 6. 필터 등록
+                // 예외 처리
+                .exceptionHandling(ex -> ex
+                        .authenticationEntryPoint((req, res, e) ->
+                                res.sendError(HttpServletResponse.SC_UNAUTHORIZED)
+                        )
+                        .accessDeniedHandler((req, res, e) ->
+                                res.sendError(HttpServletResponse.SC_FORBIDDEN)
+                        )
+                )
+
+                // 필터 등록
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
