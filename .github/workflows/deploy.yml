@@ -65,7 +65,8 @@ jobs:
             sudo docker rm spring-app || true
             
             # 3. 새 컨테이너 실행
-            sudo docker run -d --name spring-app --network app-network -p 8080:8080 -e DB_NAME=${{ secrets.DB_NAME }} -e DB_URL=${{ secrets.DB_URL }} -e DB_USERNAME=${{ secrets.DB_USERNAME }} -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} -e JWT_SECRET=${{ secrets.JWT_SECRET }} -e JWT_EXPIRE=${{ secrets.JWT_EXPIRE }} -e AI_KEY=${{ secrets.AI_KEY }} ${{ secrets.DOCKER_USERNAME }}/spring-boot-app:latest
+            # 수정된 코드 (모든 값에 쌍따옴표 추가)
+            sudo docker run -d --name spring-app --network app-network -p 8080:8080 -e DB_NAME="${{ secrets.DB_NAME }}" -e DB_URL="${{ secrets.DB_URL }}" -e DB_USERNAME="${{ secrets.DB_USERNAME }}" -e DB_PASSWORD="${{ secrets.DB_PASSWORD }}" -e JWT_SECRET="${{ secrets.JWT_SECRET }}" -e JWT_EXPIRE="${{ secrets.JWT_EXPIRE }}" -e AI_KEY="${{ secrets.AI_KEY }}" ${{ secrets.DOCKER_USERNAME }}/spring-boot-app:latest
             
             # 4. 이미지 정리
             sudo docker image prune -f
