@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: hackathon
+
+  profiles:
+    active: local
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health # 헬스 체크 기능만 웹에 노출
+  endpoint:
+    health:
+      show-details: always # 상세 상태(DB 연결 여부 등)까지 보여줌
