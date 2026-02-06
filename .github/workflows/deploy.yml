@@ -32,11 +32,11 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      # 4. ARM64 빌드를 위한 QEMU 설정
+      # 4. ARM64 빌드를 위한 QEMU 설정 (필수)
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
-      # 5. Buildx 설정
+      # 5. Buildx 설정 (필수)
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
@@ -49,7 +49,7 @@ jobs:
           platforms: linux/arm64
           tags: ${{ secrets.DOCKER_USERNAME }}/spring-boot-app:latest
 
-      # 7. EC2 배포
+      # 7. EC2 배포 (시크릿 정보 7개 모두 포함 + 한 줄 작성으로 에러 방지)
       - name: Deploy to EC2
         uses: appleboy/ssh-action@master
         with:
@@ -64,8 +64,8 @@ jobs:
             sudo docker stop spring-app || true
             sudo docker rm spring-app || true
             
-            # 3. 새 컨테이너 실행 (한 줄로 작성하여 줄바꿈 에러 방지)
-            sudo docker run -d --name spring-app --network app-network -p 8080:8080 -e DB_NAME=${{ secrets.DB_NAME }} -e DB_USERNAME=${{ secrets.DB_USERNAME }} -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} -e JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }} ${{ secrets.DOCKER_USERNAME }}/spring-boot-app:latest
+            # 3. 새 컨테이너 실행
+            sudo docker run -d --name spring-app --network app-network -p 8080:8080 -e DB_NAME=${{ secrets.DB_NAME }} -e DB_URL=${{ secrets.DB_URL }} -e DB_USERNAME=${{ secrets.DB_USERNAME }} -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} -e JWT_SECRET=${{ secrets.JWT_SECRET }} -e JWT_EXPIRE=${{ secrets.JWT_EXPIRE }} -e AI_KEY=${{ secrets.AI_KEY }} ${{ secrets.DOCKER_USERNAME }}/spring-boot-app:latest
             
             # 4. 이미지 정리
             sudo docker image prune -f
