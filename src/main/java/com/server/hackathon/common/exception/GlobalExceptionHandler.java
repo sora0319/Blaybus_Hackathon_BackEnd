@@ -1,4 +1,4 @@
-package com.server.hackathon.common;
+package com.server.hackathon.common.exception;
 
 import com.server.hackathon.common.ResponseDto;
 import lombok.extern.slf4j.Slf4j;
