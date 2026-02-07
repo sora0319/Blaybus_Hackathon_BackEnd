@@ -1,6 +1,6 @@
 package com.server.hackathon.member.client.service;
 
-import com.server.hackathon.common.CustomException;
+import com.server.hackathon.common.exception.CustomException;
 import com.server.hackathon.member.auth.CustomUserDetails;
 import com.server.hackathon.member.auth.JwtTokenProvider;
 import com.server.hackathon.member.client.controller.dto.UserJoinRequest;
@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
