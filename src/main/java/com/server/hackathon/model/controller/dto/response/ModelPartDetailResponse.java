@@ -2,6 +2,9 @@ package com.server.hackathon.model.controller.dto.response;
 
 public record ModelPartDetailResponse(
         String partUuid,
-        String partUrl,
-        String description
+        String name,
+        String material,
+        String description,
+        String partModelUrl,
+        String thumbnailUrl
 ) {}
