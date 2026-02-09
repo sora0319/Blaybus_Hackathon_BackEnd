@@ -15,3 +15,10 @@ spring:
 jwt:
   secret: ${JWT_SECRET}
   expiration: ${JWT_EXPIRE}
+
+aws:
+  s3:
+    bucket: ${AWS_BUCKET}
+    domain: ${AWS_BUCKET_URL}
+  cloudfront:
+    domain: ${CLOUDFRONT_URL}
