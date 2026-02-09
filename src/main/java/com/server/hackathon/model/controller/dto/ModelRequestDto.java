@@ -4,8 +4,10 @@ import java.util.List;
 
 public record ModelRequestDto(
         String name,
-        String description,
         String imageName,
         String imageExtension,
+        String summary,
+        List<UsageDto> usage,
+        List<TheoryDto> theory,
         List<ModelPartRequestDto> parts
 ) {}
