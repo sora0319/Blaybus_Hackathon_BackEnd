@@ -30,10 +30,10 @@ public class S3Service {
     /**
      * READ (GET) - 파일 조회용 URL
      */
-    public String getPresignedGetUrl(String fileName) {
+    public String getPresignedGetUrl(String folderName, String name, String extension) {
         GetObjectRequest getObjectRequest = GetObjectRequest.builder()
                 .bucket(bucketName)
-                .key(fileName)
+                .key(makeFileName(folderName, name, extension))
                 .build();
 
         GetObjectPresignRequest presignRequest = GetObjectPresignRequest.builder()
@@ -88,6 +88,12 @@ public class S3Service {
         return replaceDomain(presignedRequest.url().toString());
     }
      */
+
+    //S3 file name 생성
+    private String makeFileName (String folderName, String name, String extension) {
+        return folderName + "/" + name + "." + extension;
+    }
+
 
     //S3 도메인을 CloudFront 도메인으로 교체
     private String replaceDomain(String originalUrl) {
