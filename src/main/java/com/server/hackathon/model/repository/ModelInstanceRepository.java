@@ -29,6 +29,4 @@ public interface ModelInstanceRepository extends JpaRepository<ModelInstance, Lo
             @Param("memberShortUuid") String memberShortUuid,
             @Param("modelShortUuid") String modelShortUuid
     );
-
-    Optional<ModelInstance> findByShortUuid(String modelUuid);
 }

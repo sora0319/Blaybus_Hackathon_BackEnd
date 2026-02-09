@@ -13,6 +13,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.JdbcTypeCode;
@@ -45,8 +46,26 @@ public class Simulation extends BaseEntity {
     @JoinColumn(name = "model_instance_id", unique = true)
     private ModelInstance modelInstance;
 
+    @Builder
+    public Simulation(ModelInstance modelInstance) {
+        this.modelInstance = modelInstance;
+    }
+
     public void setModelInstance(ModelInstance modelInstance) {
         this.modelInstance = modelInstance;
+    }
+
+    // null 이 아닐때만 덮어쓰기
+    public void updateState(AssemblyData assembly, SimulatorData simulator, SimulatorData edit) {
+        if (assembly != null) {
+            this.assembly = assembly;
+        }
+        if (simulator != null) {
+            this.simulator = simulator;
+        }
+        if (edit != null) {
+            this.edit = edit;
+        }
     }
 
 }
