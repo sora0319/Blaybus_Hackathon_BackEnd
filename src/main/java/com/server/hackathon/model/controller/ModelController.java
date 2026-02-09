@@ -38,6 +38,6 @@ public class ModelController {
     ) {
         ModelDetailResponse response = modelService.getModelDetail(memberUuid, modelUuid);
 
-        return ResponseDto.success("모델 상세 정보 조회 성공", response);
+        return ResponseDto.success("모델 상제 및 부품 정보 조회 성공", response);
     }
 }
