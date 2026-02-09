@@ -11,46 +11,41 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Entity
 @Getter
-@Table(name = "model_part")
-@ToString(exclude = "model")
+@Table(name = "model_theory")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
-@Builder
-public class ModelPart extends BaseEntity {
+public class ModelTheory extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
     private Long id;
 
-    private String name;
-
-    private String material;
-
-    private String fileName;
-
-    private String extension;
-
-    private String imageName;
-
-    private String imageExtension;
+    private String title;
 
     @Column(columnDefinition = "TEXT")
-    private String description;
+    private String content;
+
+    @Column(columnDefinition = "TEXT")
+    private String details;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "model_id")
     private Model model;
 
+    @Builder
+    public ModelTheory(String title, String content, String details) {
+        this.title = title;
+        this.content = content;
+        this.details = details;
+    }
+
     public void setModel(Model model) {
         this.model = model;
     }
 }
+

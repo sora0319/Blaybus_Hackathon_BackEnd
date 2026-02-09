@@ -41,10 +41,28 @@ public class Model extends BaseEntity {
 
     @OneToMany(mappedBy = "model", cascade = CascadeType.ALL)
     @Builder.Default
+    private List<ModelUsage> usage = new ArrayList<>();
+
+    @OneToMany(mappedBy = "model", cascade = CascadeType.ALL)
+    @Builder.Default
+    private List<ModelTheory> theory = new ArrayList<>();
+
+    @OneToMany(mappedBy = "model", cascade = CascadeType.ALL)
+    @Builder.Default
     private List<ModelPart> modelParts = new ArrayList<>();
 
     public void addPart(ModelPart part) {
         this.modelParts.add(part);
         part.setModel(this);
+    }
+
+    public void addUsage(ModelUsage usage) {
+        this.usage.add(usage);
+        usage.setModel(this);
+    }
+
+    public void addTheory(ModelTheory theory) {
+        this.theory.add(theory);
+        theory.setModel(this);
     }
 }
