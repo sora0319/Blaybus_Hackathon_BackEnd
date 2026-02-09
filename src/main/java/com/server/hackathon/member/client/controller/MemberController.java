@@ -4,7 +4,7 @@ package com.server.hackathon.member.client.controller;
 import com.server.hackathon.common.ResponseDto;
 import com.server.hackathon.member.client.controller.dto.UserJoinRequest;
 import com.server.hackathon.member.client.controller.dto.UserLoginRequest;
-import com.server.hackathon.member.client.service.UserService;
+import com.server.hackathon.member.client.service.MemberService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -15,15 +15,15 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
-public class UserController {
+public class MemberController {
 
-    private final UserService userService;
+    private final MemberService memberService;
 
     // [회원가입]
     @PostMapping("/signup")
     public ResponseDto<String> signUp(@RequestBody UserJoinRequest dto) {
         // 서비스에서 생성된 UUID를 받아옴
-        String shortUuid = userService.signUp(dto);
+        String shortUuid = memberService.signUp(dto);
 
         // ResponseDto에 담아서 반환
         return ResponseDto.success("회원가입에 성공하였습니다.", shortUuid);
@@ -32,7 +32,7 @@ public class UserController {
     // [로그인]
     @PostMapping("/login")
     public ResponseDto<?> login(@RequestBody UserLoginRequest dto, HttpServletResponse response) {
-        String token = userService.login(dto);
+        String token = memberService.login(dto);
 
         // 쿠키 생성 및 설정
         ResponseCookie cookie = ResponseCookie.from("AccessToken", token)

@@ -53,7 +53,7 @@ public class SecurityConfig {
 
                 // 요청 권한 설정
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/users/signup", "/api/users/login", "/actuator/health").permitAll()
+                        .requestMatchers("/api/users/signup", "/api/users/login", "/actuator/health", "/api/models").permitAll()
                         .anyRequest().authenticated()
                 )
 
