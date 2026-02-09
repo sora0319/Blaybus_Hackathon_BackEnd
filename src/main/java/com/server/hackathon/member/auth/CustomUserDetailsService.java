@@ -1,7 +1,7 @@
 package com.server.hackathon.member.auth;
 
-import com.server.hackathon.member.client.model.Users;
-import com.server.hackathon.member.client.repository.UserRepository;
+import com.server.hackathon.member.client.model.Member;
+import com.server.hackathon.member.client.repository.MemberRepository;
 import java.util.Collections;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,11 +15,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private final UserRepository userRepository;
+    private final MemberRepository memberRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Users user = userRepository.findByUsername(username)
+        Member user = memberRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("해당 유저를 찾을 수 없습니다: " + username));
 
         return new CustomUserDetails(

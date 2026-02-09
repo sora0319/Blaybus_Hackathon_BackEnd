@@ -1,12 +1,12 @@
 package com.server.hackathon.member.client.service;
 
-import com.server.hackathon.common.CustomException;
+import com.server.hackathon.common.exception.CustomException;
 import com.server.hackathon.member.auth.CustomUserDetails;
 import com.server.hackathon.member.auth.JwtTokenProvider;
 import com.server.hackathon.member.client.controller.dto.UserJoinRequest;
 import com.server.hackathon.member.client.controller.dto.UserLoginRequest;
-import com.server.hackathon.member.client.model.Users;
-import com.server.hackathon.member.client.repository.UserRepository;
+import com.server.hackathon.member.client.model.Member;
+import com.server.hackathon.member.client.repository.MemberRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -16,15 +16,14 @@ import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class UserService {
+public class MemberService {
 
-    private final UserRepository userRepository;
+    private final MemberRepository memberRepository;
     private final BCryptPasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
     private final AuthenticationManager authenticationManager;
@@ -32,18 +31,18 @@ public class UserService {
     // [회원가입]
     @Transactional
     public String signUp(UserJoinRequest dto) {
-        if (userRepository.existsByUsername((dto.username()))) {
+        if (memberRepository.existsByUsername((dto.username()))) {
             throw new CustomException(HttpStatus.BAD_REQUEST, "Username is already in use");
         }
 
-        Users user = Users.builder()
+        Member user = Member.builder()
                         .username(dto.username())
                         .password(passwordEncoder.encode(dto.password()))
                         .email(dto.email())
                         .build();
 
         // 저장 후 생성된 UUID 반환
-        return userRepository.save(user).getShortUuid();
+        return memberRepository.save(user).getShortUuid();
     }
 
     // [로그인]
