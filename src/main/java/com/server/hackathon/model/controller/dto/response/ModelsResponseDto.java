@@ -1,4 +1,4 @@
-package com.server.hackathon.model.controller.dto;
+package com.server.hackathon.model.controller.dto.response;
 
 public record ModelsResponseDto(
         String modelUuid,

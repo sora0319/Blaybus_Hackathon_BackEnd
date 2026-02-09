@@ -1,22 +1,9 @@
 package com.server.hackathon.model.controller;
 
-import com.server.hackathon.common.exception.CustomException;
-import com.server.hackathon.member.client.model.Member;
-import com.server.hackathon.member.client.repository.MemberRepository;
-import com.server.hackathon.model.controller.dto.ModelPartRequestDto;
-import com.server.hackathon.model.controller.dto.ModelRequestDto;
-import com.server.hackathon.model.model.Model;
-import com.server.hackathon.model.model.ModelInstance;
-import com.server.hackathon.model.model.ModelPart;
-import com.server.hackathon.model.repository.ModelInstanceRepository;
-import com.server.hackathon.model.repository.ModelRepository;
+import com.server.hackathon.model.controller.dto.request.ModelRequestDto;
 import com.server.hackathon.model.service.DataInitService;
-import java.util.List;
-import java.util.stream.Collectors;
 import lombok.*;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

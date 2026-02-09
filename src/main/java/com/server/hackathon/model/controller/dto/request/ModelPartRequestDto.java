@@ -1,4 +1,4 @@
-package com.server.hackathon.model.controller.dto;
+package com.server.hackathon.model.controller.dto.request;
 
 public record ModelPartRequestDto(
         String name,

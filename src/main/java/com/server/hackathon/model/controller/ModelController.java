@@ -1,8 +1,8 @@
 package com.server.hackathon.model.controller;
 
 import com.server.hackathon.common.ResponseDto;
-import com.server.hackathon.model.controller.dto.ModelDetailResponse;
-import com.server.hackathon.model.controller.dto.ModelsResponseDto;
+import com.server.hackathon.model.controller.dto.response.ModelDetailResponse;
+import com.server.hackathon.model.controller.dto.response.ModelsResponseDto;
 import com.server.hackathon.model.service.ModelService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

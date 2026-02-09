@@ -1,7 +1,7 @@
 package com.server.hackathon.model.service;
 
 import com.server.hackathon.common.exception.CustomException;
-import com.server.hackathon.model.controller.dto.ModelPartDetailResponse;
+import com.server.hackathon.model.controller.dto.response.ModelPartDetailResponse;
 import com.server.hackathon.model.model.ModelPart;
 import com.server.hackathon.model.repository.ModelPartRepository;
 

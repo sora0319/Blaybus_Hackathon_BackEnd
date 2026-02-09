@@ -1,8 +1,8 @@
 package com.server.hackathon.model.service;
 
-import com.server.hackathon.model.controller.dto.ModelDetailResponse;
-import com.server.hackathon.model.controller.dto.ModelPartResponse;
-import com.server.hackathon.model.controller.dto.ModelsResponseDto;
+import com.server.hackathon.model.controller.dto.response.ModelDetailResponse;
+import com.server.hackathon.model.controller.dto.vo.ModelPartDto;
+import com.server.hackathon.model.controller.dto.response.ModelsResponseDto;
 import com.server.hackathon.model.model.Model;
 import com.server.hackathon.model.model.ModelInstance;
 import com.server.hackathon.model.repository.ModelInstanceRepository;
@@ -51,7 +51,7 @@ public class ModelService {
                 .orElseThrow(() -> new IllegalArgumentException("모델을 찾을 수 없거나 접근 권한이 없습니다."));
 
         // 부품 리스트 DTO 변환
-        List<ModelPartResponse> partResponses = model.getModelParts().stream()
+        List<ModelPartDto> partResponses = model.getModelParts().stream()
                 .map(part -> {
                     String fileUrl = s3Service.getPresignedGetUrl(
                             model.getName(),
@@ -59,7 +59,7 @@ public class ModelService {
                             part.getExtension()
                     );
 
-                    return new ModelPartResponse(
+                    return new ModelPartDto(
                             part.getShortUuid(),
                             fileUrl
                     );
