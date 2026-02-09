@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/3d")
+@RequestMapping("/api/3d/models")
 @RequiredArgsConstructor
 public class ModelController {
 
     private final ModelService modelService;
 
-    @GetMapping("/models")
+    @GetMapping
     public ResponseDto<List<ModelsResponseDto>> getMyModels(
             @AuthenticationPrincipal String memberUuid
     ) {
@@ -31,7 +31,7 @@ public class ModelController {
         return ResponseDto.success("사용자 모델 목록 조회 성공", models);
     }
 
-    @GetMapping("/model/{modelUuid}")
+    @GetMapping("/{modelUuid}")
     public ResponseDto<ModelDetailResponse> getModelDetail(
             @AuthenticationPrincipal String memberUuid,
             @PathVariable String modelUuid
