@@ -8,9 +8,22 @@ spring:
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
 
+spring:
   ai:
     openai:
       api-key: ${AI_KEY}
+      chat:
+        options:
+          model: gpt-5-mini # 대화용
+      embedding:
+        options:
+          model: text-embedding-3-small
+
+    vectorstore:
+      pinecone:
+        api-key: ${PINECONE_API_KEY}
+        environment: us-east-1
+        index-name: spring-ai-chat
 
 jwt:
   secret: ${JWT_SECRET}

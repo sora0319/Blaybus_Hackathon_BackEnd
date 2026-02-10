@@ -77,6 +77,7 @@ jobs:
               -e AWS_BUCKET="${{ secrets.AWS_BUCKET }}" \
               -e AWS_BUCKET_URL="${{ secrets.AWS_BUCKET_URL }}" \
               -e CLOUDFRONT_URL="${{ secrets.CLOUDFRONT_URL }}" \
+              -e PINECONE_API_KEY="${{ secrets.PINECONE_API_KEY }}" \
               ${{ secrets.DOCKER_USERNAME }}/spring-boot-app:latest
             
             # 4. 이미지 정리
