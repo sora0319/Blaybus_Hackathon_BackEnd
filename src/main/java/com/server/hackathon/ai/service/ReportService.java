@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 import java.io.ByteArrayOutputStream;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -33,6 +34,7 @@ public class ReportService {
     private final ChatMessageRepository chatMessageRepository;
     private final ChatClient.Builder chatClientBuilder;
 
+    @Transactional
     public byte[] generatePdfReport(String memberUuid, String modelUuid) {
         // 1. 대화 내역 가져오기
         ModelInstance modelInstance = modelInstanceRepository.findByMemberShortUuidAndModelShortUuid(memberUuid, modelUuid)
