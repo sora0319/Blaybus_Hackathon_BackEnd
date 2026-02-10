@@ -12,12 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
 public class ModelPartService {
 
     private final ModelPartRepository modelPartRepository;
     private final S3Service s3Service;
 
+    @Transactional(readOnly = true)
     public ModelPartDetailResponse getPartDetail(String memberUuid, String partUuid) {
         ModelPart part = modelPartRepository.findPartByUuidAndMember(partUuid, memberUuid)
                 .orElseThrow(() -> new CustomException(HttpStatus.FORBIDDEN, "부품을 찾을 수 없거나 접근 권한이 없습니다."));
