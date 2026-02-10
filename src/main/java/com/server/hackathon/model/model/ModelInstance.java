@@ -1,5 +1,6 @@
 package com.server.hackathon.model.model;
 
+import com.server.hackathon.ai.model.ChatRoom;
 import com.server.hackathon.common.BaseEntity;
 import com.server.hackathon.member.client.model.Member;
 import jakarta.persistence.CascadeType;
@@ -41,10 +42,15 @@ public class ModelInstance extends BaseEntity {
     @OneToOne(mappedBy = "modelInstance", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Simulation simulation;
 
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "chatroom_id")
+    private ChatRoom chatRoom;
+
     @Builder
     public ModelInstance(Member member, Model model) {
         this.member = member;
         this.model = model;
+        this.chatRoom = new ChatRoom();
     }
 
     public void addSimulation(Simulation simulation) {
