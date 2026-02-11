@@ -3,6 +3,10 @@ spring:
     activate:
       on-profile: prod
 
+  mvc:
+    async:
+      request-timeout: 90s
+
   datasource:
     url: ${DB_URL}
     username: ${DB_USERNAME}
@@ -34,3 +38,9 @@ aws:
     domain: ${AWS_BUCKET_URL}
   cloudfront:
     domain: ${CLOUDFRONT_URL}
+
+server:
+  tomcat:
+    connection-timeout: 90s
+    keep-alive-timeout: 90s
+
