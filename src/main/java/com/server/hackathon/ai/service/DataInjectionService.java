@@ -77,7 +77,7 @@ public class DataInjectionService {
                 documents.add(theoryDoc);
             }
 
-            // Theory 정보 개별 저장
+            // Usage 정보 개별 저장
             for (ModelUsage usage : model.getUsage()) {
                 String usageContent = String.format(
                         "모델명: %s\n  용도: %s\n 내용: %s\n",

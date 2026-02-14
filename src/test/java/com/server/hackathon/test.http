@@ -1,0 +1,141 @@
+### 회원가입
+POST http://localhost:8080/api/users/signup
+Content-Type: application/json
+
+{
+  "username": "",
+  "password": "",
+  "email": ""
+}
+
+
+### 로그인
+POST http://localhost:8080/api/users/login
+Content-Type: application/json
+
+{
+  "username": "",
+  "password": ""
+}
+
+### 대시보드 모델 목록 전달
+GET http://localhost:8080/api/3d/models
+
+
+### 모델 설명 및 모델 관련 부품 리스트 전달
+@modelUuid1 =
+GET http://localhost:8080/api/models/{{modelUuid1}}
+
+
+### 파츠 설명 및 파츠 url 전달
+@partUuid =
+GET http://localhost:8080/api/parts/{{partUuid}}
+
+
+### 모델 별 메모 조회
+@modelUuid2 =
+GET http://localhost:8080/api/models/{{modelUuid2}}/memo
+
+
+### 모델 별 메모 저장
+PUT http://localhost:8080/api/models/{{modelUuid2}}/memo
+Content-Type: application/json
+
+{
+  "content": {
+    "title": "산업용 로봇 팔(Robotic Arm) 기초 이론 정리",
+    "body": "# 1. 로봇 팔의 정의\n- 인간의 팔과 유사한 구조(관절+링크)를 가진 기계 장치\n- 정밀 작업 및 자동화 수행\n\n# 2. 주요 용도\n* **산업 자동화**: 용접, 조립, 도장 등 (반복 정밀도 ↑)\n* **물류**: Pick & Place, 적재, 분류\n* **정밀 작업**: 반도체 조립 등 미세 공정\n\n---\n\n# 3. 핵심 이론 (Study)\n\n## ① 자유도 (DoF, Degree of Freedom)\n- 로봇이 독립적으로 움직일 수 있는 축의 개수\n- **표준 산업용 로봇**: 6 DoF\n  - 위치 제어: X, Y, Z\n  - 방향 제어: Roll, Pitch, Yaw\n\n## ② 좌표계와 변환\n- 각 관절(Joint)마다 로컬 좌표계가 있음\n- 행렬 변환을 통해 로봇 팔 끝단의 절대 위치를 계산함\n\n## ③ 운동학 (Kinematics)\n> 제어의 핵심 이론\n- **정기구학 (Forward)**: 관절 각도($\\theta$)를 알 때 → 끝단 위치($x,y,z$) 계산\n- **역기구학 (Inverse)**: 가고 싶은 위치($x,y,z$)를 알 때 → 필요한 관절 각도($\\theta$) 계산"
+  }
+}
+
+### 사용자 시점 데이터 저장
+@modelUuid3 =
+POST http://localhost:8080/api/models/{{modelUuid3}}/simulations
+Content-Type: application/json
+
+{
+  "assembly": {
+    "cameraState": {
+      "position": { "x": 2.14, "y": 3.6, "z": 5.21 },
+      "target": { "x": 0.0, "y": 1.2, "z": 0.0 },
+      "rotation": { "x": -0.42, "y": 0.78, "z": 0.0 },
+      "quaternion": { "x": 0.12, "y": 0.45, "z": 0.22, "w": 0.86 },
+      "zoom": 1.35,
+      "fov": 50
+    }
+  },
+
+  "edit": {
+    "cameraState": {
+      "position": { "x": 5.0, "y": 2.0, "z": 5.0 },
+      "target": { "x": 0.0, "y": 0.5, "z": 0.0 },
+      "rotation": { "x": 0.1, "y": 0.2, "z": 0.0 },
+      "quaternion": { "x": 0.0, "y": 0.1, "z": 0.0, "w": 0.99 },
+      "zoom": 2.5,
+      "fov": 50
+    },
+    "partsState": [
+      {
+        "partUuid": "",
+        "position": { "x": 1.5, "y": 0.0, "z": 0.0 },
+        "rotation": { "x": 0.0, "y": 1.57, "z": 0.0 },
+        "isExploded": true
+      },
+      {
+        "partUuid": "",
+        "position": { "x": 3.0, "y": 0.5, "z": 0.0 },
+        "rotation": { "x": 0.0, "y": 0.0, "z": 0.0 },
+        "isExploded": true
+      }
+    ]
+  },
+
+  "simulator": {
+    "cameraState": {
+      "position": { "x": 10.0, "y": 10.0, "z": 10.0 },
+      "target": { "x": 0.0, "y": 0.0, "z": 0.0 },
+      "rotation": { "x": -0.7, "y": 0.7, "z": 0.0 },
+      "quaternion": { "x": 0.2, "y": 0.4, "z": 0.1, "w": 0.8 },
+      "zoom": 0.8,
+      "fov": 50
+    },
+    "partsState": [
+      {
+        "partUuid": "",
+        "position": { "x": 1.5, "y": 0.0, "z": 0.0 },
+        "rotation": { "x": 0.0, "y": 1.57, "z": 0.0 },
+        "isExploded": true
+      },
+      {
+        "partUuid": "",
+        "position": { "x": 3.0, "y": 0.5, "z": 0.0 },
+        "rotation": { "x": 0.0, "y": 0.0, "z": 0.0 },
+        "isExploded": true
+      }
+    ]
+  }
+}
+
+
+###사용자 시점 assembly 데이터 조회
+GET http://localhost:8080/api/models/{{modelUuid3}}/simulations/assembly
+
+###사용자 시점 edit 데이터 조회
+GET http://localhost:8080/api/models/{{modelUuid3}}/simulations/edit
+
+###사용자 시점 simulator 데이터 조회
+GET http://localhost:8080/api/models/{{modelUuid3}}/simulations/simulator
+
+
+### ai chat 기록
+POST http://localhost:8080/api/chat/{{modelUuid3}}/message
+Content-Type: application/json
+
+"로봇 팔에 대해 개념을 말해줘"
+
+### 대화 기록 가져오기
+GET http://localhost:8080/api/chat/{{modelUuid3}}/history
+
+
+### pdf 생성
+GET http://localhost:8080/api/chat/{{modelUuid3}}/report
